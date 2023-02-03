@@ -12,6 +12,7 @@ const dicas = [
 ]
 const salvaTentativa = []
 const letrasUtilizadas = []
+let primeiraTentativa = true
 
 // selecionando uma dica e resposta no aleatório
 let posicao = parseInt(Math.random() * respostas.length) // vou utilizar isso para sorteio de palavras depois
@@ -63,13 +64,14 @@ inserirDadosForca()
 // evento de click para ler a letra/palavra
 ativar.addEventListener('click', () => {
     
+    
     // recebe a palavra digitada
     let palavraTentativa = document.querySelector('[data-tentativa="tentativa"]').value
     palavraTentativa = palavraTentativa.toLowerCase()
     console.log(palavraTentativa)
     
     // verifica se a palavra é igual a resposta certa
-    if(palavraTentativa == respostaAdivinha){
+    if(palavraTentativa == respostaAdivinha && primeiraTentativa){
         return textoResposta.textContent = `A resposta é ${respostaAdivinha}. Acertou de primeira!`
         
     }
@@ -114,7 +116,7 @@ ativar.addEventListener('click', () => {
     textoResposta.textContent == respostaAdivinha ? 
     textoResposta.textContent = `A resposta é ${respostaAdivinha}. Parabéns!` 
     : textoResposta.textContent = textoResposta.textContent
-    
+    primeiraTentativa = false
 })
 
 
