@@ -25,6 +25,7 @@ const dicaTexto = document.querySelector('[data-resposta="dica"]')
 const textoInfo = document.querySelector('[data-resposta="info"]')
 const textoUtilizadas = document.querySelector('[data-resposta="utilizadas"]')
 const ativar = document.querySelector('[data-botao="ativar"]')
+const mensagemResposta = document.querySelector('[data-resposta="mensagemResposta"]')
 
 
 // preparando a página para receber os dados
@@ -59,10 +60,8 @@ const verificaLetraUtilizada = (letra) =>{
     
 }
 
-inserirDadosForca()
+const jogoForca = () => {
 
-// evento de click para ler a letra/palavra
-ativar.addEventListener('click', () => {
     
     
     // recebe a palavra digitada
@@ -72,7 +71,8 @@ ativar.addEventListener('click', () => {
     
     // verifica se a palavra é igual a resposta certa
     if(palavraTentativa == respostaAdivinha && primeiraTentativa){
-        return textoResposta.textContent = `A resposta é ${respostaAdivinha}. Acertou de primeira!`
+        textoResposta.textContent = respostaAdivinha
+        return mensagemResposta.textContent = `A resposta é ${respostaAdivinha}. Acertou de primeira!`
         
     }
 
@@ -114,11 +114,21 @@ ativar.addEventListener('click', () => {
 
     // operador ternário para verificar se a resposta já está completa
     textoResposta.textContent == respostaAdivinha ? 
-    textoResposta.textContent = `A resposta é ${respostaAdivinha}. Parabéns!` 
+    mensagemResposta.textContent = `A resposta é ${respostaAdivinha}. Parabéns!` 
     : textoResposta.textContent = textoResposta.textContent
     primeiraTentativa = false
-})
+    
 
+    console.log(textoResposta.textContent)
+}
+
+inserirDadosForca()
+ativar.addEventListener('click', () => {
+    if(textoResposta.textContent != respostaAdivinha){
+        jogoForca()
+    }
+    
+})
 
 
 
