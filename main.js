@@ -1,8 +1,15 @@
 // jogo da forca
 
 // primeiro registrando dados
-const respostas = ['bolo', 'guaraná', 'sorvete', 'macarrão']
-const dicas = ['doce de festa', 'fruta usada em refrescos', 'doce bom para o verão', 'comida italiana']
+const respostas = ['bolo', 'guaraná', 'sorvete', 'macarrão', 'pizza', 'arroz']
+const dicas = [
+    'doce de festa', 
+    'fruta usada em refrescos', 
+    'doce bom para o verão', 
+    'comida italiana feita com muito molho', 
+    'Em São Paulo, é proibido botar ketchup',
+    'Faz parte do almoço/jantar brasileiro'
+]
 const salvaTentativa = []
 const letrasUtilizadas = []
 
@@ -51,7 +58,6 @@ const verificaLetraUtilizada = (letra) =>{
     
 }
 
-
 inserirDadosForca()
 
 // evento de click para ler a letra/palavra
@@ -62,24 +68,26 @@ ativar.addEventListener('click', () => {
     palavraTentativa = palavraTentativa.toLowerCase()
     console.log(palavraTentativa)
     
-    
-    //verifica se a palavra é igual a resposta certa
+    // verifica se a palavra é igual a resposta certa
     if(palavraTentativa == respostaAdivinha){
         return textoResposta.textContent = `A resposta é ${respostaAdivinha}. Acertou de primeira!`
         
     }
+
+    // reseta o texto
     textoInfo.innerHTML = ""
 
-
+    // faz um loop for of de cada letra da palavra digitada para ver se está certo
+    // vou criar depois uma função para deixar o laço de repetição separado, enviando a palavraTentativa
     for(let letraTentativa of palavraTentativa){
         
-        // console.log(letraTentativa)
+        // limpeza do textoResposta para inserir dados no loop
         textoResposta.textContent = ""
         
-        verificaLetraUtilizada(letraTentativa)
+        // verifico se a letra já foi utilizada
+        verificaLetraUtilizada(letraTentativa)    
 
-        
-
+        // laço para verificar se a letra está na resposta 
         for(let letraResposta in respostaAdivinha){
         
             if(letraTentativa == salvaTentativa[letraResposta]){
@@ -89,7 +97,6 @@ ativar.addEventListener('click', () => {
 
             }else if(letraTentativa == respostaAdivinha[letraResposta]){
 
-                
                 salvaTentativa[letraResposta] = letraTentativa
                 textoResposta.textContent += `${salvaTentativa[letraResposta]}`
 
@@ -103,7 +110,7 @@ ativar.addEventListener('click', () => {
         
     }
 
-
+    // operador ternário para verificar se a resposta já está completa
     textoResposta.textContent == respostaAdivinha ? 
     textoResposta.textContent = `A resposta é ${respostaAdivinha}. Parabéns!` 
     : textoResposta.textContent = textoResposta.textContent
