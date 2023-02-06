@@ -4,29 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Jogo da forca</title>
 </head>
 <body>
     
-    <h2>Adivinhe a palavra:</h2>
+    <main class="jogo">
 
-    <p data-dica="dica"></p>
+        <section class="jogo-caixa">
+            <h2 class="jogo-titulo">Adivinhe a palavra:</h2>
 
-    <input type="text" placeholder="Adivinhe a palavra" data-tentativa="tentativa" value="">
+            <p data-dica="dica"></p>
 
-    <button data-botao="ativar">Ativar</button>
+            <input type="text" class="jogo-input" placeholder="Adivinhe a palavra" data-tentativa="tentativa" value="">
 
-    <button data-botao="novo-jogo">Novo jogo</button>
+            <div class="caixa-botao">
+                <button class="botao" data-botao="ativar">Ativar</button>
 
-    <p data-resposta="dica"></p>
+                <button class="botao" data-botao="novo-jogo">Novo jogo</button>
+            </div>
+            
 
-    <h3 data-resposta="resposta"></h3>
+            <p class="jogo-texto" data-resposta="dica"></p>
 
-    <h3 data-resposta="mensagemResposta"></h3>
+            <h3 class="jogo-resposta" data-resposta="resposta"></h3>
 
-    <p data-resposta="utilizadas"></p>
+            <h3 class="jogo-resposta" data-resposta="mensagemResposta"></h3>
 
-    <div data-resposta="info"></div>
+            <p class="jogo-texto" data-resposta="utilizadas"></p>
+
+            <div class="jogo-texto" data-resposta="info"></div>
+        </section>
+        
+    </main>
+    
 
     <script src="./main.js"></script>
     
