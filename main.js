@@ -10,14 +10,14 @@ const dicas = [
     'Em São Paulo, é proibido botar ketchup',
     'Faz parte do almoço/jantar brasileiro'
 ]
-const salvaTentativa = []
-const letrasUtilizadas = []
+let salvaTentativa = []
+let letrasUtilizadas = []
 let primeiraTentativa = true
 
 // selecionando uma dica e resposta no aleatório
 let posicao = parseInt(Math.random() * respostas.length) // vou utilizar isso para sorteio de palavras depois
-const respostaAdivinha = respostas[posicao]
-const dica = dicas[posicao]
+let respostaAdivinha = respostas[posicao]
+let dica = dicas[posicao]
 
 // pegando elementos do HTML para manipular
 const textoResposta = document.querySelector('[data-resposta="resposta"]')
@@ -26,21 +26,26 @@ const textoInfo = document.querySelector('[data-resposta="info"]')
 const textoUtilizadas = document.querySelector('[data-resposta="utilizadas"]')
 const ativar = document.querySelector('[data-botao="ativar"]')
 const mensagemResposta = document.querySelector('[data-resposta="mensagemResposta"]')
+const caixaPalavraTentativa = document.querySelector('[data-tentativa="tentativa"]')
+const novoJogo = document.querySelector('[data-botao="novo-jogo"]')
 
 
 // preparando a página para receber os dados
 dicaTexto.textContent = dica
 
 
-const inserirDadosForca = () =>{
+const inserirDadosForca = () => {
+    salvaTentativa = []
+    textoResposta.textContent = ""
     for(let espacoTexto in respostaAdivinha){
         salvaTentativa[espacoTexto] = '_ '
         textoResposta.textContent += salvaTentativa[espacoTexto]
     }
     
+    
 }
 
-const verificaLetraUtilizada = (letra) =>{
+const verificaLetraUtilizada = (letra) => {
 
     if(letrasUtilizadas == ""){
 
@@ -62,12 +67,10 @@ const verificaLetraUtilizada = (letra) =>{
 
 const jogoForca = () => {
 
-    
-    
     // recebe a palavra digitada
     let palavraTentativa = document.querySelector('[data-tentativa="tentativa"]').value
     palavraTentativa = palavraTentativa.toLowerCase()
-    console.log(palavraTentativa)
+    
     
     // verifica se a palavra é igual a resposta certa
     if(palavraTentativa == respostaAdivinha && primeiraTentativa){
@@ -119,16 +122,49 @@ const jogoForca = () => {
     primeiraTentativa = false
     
 
-    console.log(textoResposta.textContent)
+    
 }
 
+const resetaJogo = () => {
+
+    primeiraTentativa = true
+
+    posicao = parseInt(Math.random() * respostas.length)
+    respostaAdivinha = respostas[posicao]
+    dica = dicas[posicao]
+    
+    dicaTexto.textContent = dica
+    inserirDadosForca()
+    letrasUtilizadas = []
+    mensagemResposta.textContent = ""
+    textoUtilizadas.textContent = ""
+    textoInfo.innerHTML = ""
+
+}
+
+
+// Chamando as funções e eventos
 inserirDadosForca()
 ativar.addEventListener('click', () => {
-    if(textoResposta.textContent != respostaAdivinha){
+    if(textoResposta.textContent != respostaAdivinha) {
         jogoForca()
     }
     
 })
 
+caixaPalavraTentativa.addEventListener('keypress', (evento) => {
+    
+    if(evento.key == 'Enter' && textoResposta.textContent != respostaAdivinha) {
+        jogoForca()
+    }
+
+})
+
+
+novoJogo.addEventListener('click', () => {
+
+    resetaJogo()
+
+})
 
 
