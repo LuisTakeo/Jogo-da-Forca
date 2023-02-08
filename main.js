@@ -75,6 +75,7 @@ const jogoForca = () => {
     // verifica se a palavra é igual a resposta certa
     if(palavraTentativa == respostaAdivinha && primeiraTentativa){
         textoResposta.textContent = respostaAdivinha
+        caixaPalavraTentativa.value = ""
         return mensagemResposta.textContent = `A resposta é ${respostaAdivinha}. Acertou de primeira!`
         
     }
@@ -122,7 +123,7 @@ const jogoForca = () => {
     primeiraTentativa = false
     
 
-    
+    caixaPalavraTentativa.value = ""
 }
 
 const resetaJogo = () => {
@@ -133,12 +134,14 @@ const resetaJogo = () => {
     respostaAdivinha = respostas[posicao]
     dica = dicas[posicao]
     
+    caixaPalavraTentativa.value = ""
     dicaTexto.textContent = dica
     inserirDadosForca()
     letrasUtilizadas = []
     mensagemResposta.textContent = ""
     textoUtilizadas.textContent = ""
     textoInfo.innerHTML = ""
+    
 
 }
 
