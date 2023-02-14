@@ -18,6 +18,9 @@ let primeiraTentativa = true
 let posicao = parseInt(Math.random() * respostas.length) // vou utilizar isso para sorteio de palavras depois
 let respostaAdivinha = respostas[posicao]
 let dica = dicas[posicao]
+let contadorErros = 0
+let identificadorAcerto = 0
+let valorAtualAcertos = 0
 
 // pegando elementos do HTML para manipular
 const textoResposta = document.querySelector('[data-resposta="resposta"]')
@@ -28,10 +31,12 @@ const ativar = document.querySelector('[data-botao="ativar"]')
 const mensagemResposta = document.querySelector('[data-resposta="mensagemResposta"]')
 const caixaPalavraTentativa = document.querySelector('[data-tentativa="tentativa"]')
 const novoJogo = document.querySelector('[data-botao="novo-jogo"]')
+const contadorTexto = document.querySelector('[data-tentativa="contador"]')
 
 
 // preparando a página para receber os dados
 dicaTexto.textContent = dica
+contadorTexto.textContent = `Contador de erros: ${contadorErros}/5`
 
 
 const inserirDadosForca = () => {
@@ -47,21 +52,10 @@ const inserirDadosForca = () => {
 
 const verificaLetraUtilizada = (letra) => {
 
-    if(letrasUtilizadas == ""){
-
-        letrasUtilizadas.push(letra)
-        textoUtilizadas.textContent = `Letras utilizadas: ${JSON.stringify(letrasUtilizadas)}`
-
-    }else if(letrasUtilizadas.includes(letra)){
-
-        textoInfo.innerHTML += `<span> Letra ${letra} já utilizada. / </span>`   
-
-    }else{
-
-        letrasUtilizadas.push(letra)
-        textoUtilizadas.textContent = `Letras utilizadas: ${JSON.stringify(letrasUtilizadas)}`
-    
-    }
+    if(!letrasUtilizadas.includes(letra)) {
+        letrasUtilizadas.push(letra);
+        textoUtilizadas.textContent = `Letras utilizadas: ${JSON.stringify(letrasUtilizadas)}`;
+    } else textoInfo.innerHTML += `<span> Letra ${letra} já utilizada. / </span>`;
     
 }
 
@@ -83,7 +77,8 @@ const jogoForca = () => {
     // reseta o texto
     textoInfo.innerHTML = ""
 
-    // faz um loop for of de cada letra da palavra digitada para ver se está certo
+    
+
     // vou criar depois uma função para deixar o laço de repetição separado, enviando a palavraTentativa
     for(let letraTentativa of palavraTentativa){
         
@@ -91,7 +86,7 @@ const jogoForca = () => {
         textoResposta.textContent = ""
         
         // verifico se a letra já foi utilizada
-        verificaLetraUtilizada(letraTentativa)    
+        verificaLetraUtilizada(letraTentativa)   
 
         // laço para verificar se a letra está na resposta 
         for(let letraResposta in respostaAdivinha){
@@ -103,8 +98,10 @@ const jogoForca = () => {
 
             }else if(letraTentativa == respostaAdivinha[letraResposta]){
 
-                salvaTentativa[letraResposta] = letraTentativa
-                textoResposta.textContent += `${salvaTentativa[letraResposta]}`
+                salvaTentativa[letraResposta] = letraTentativa;
+                textoResposta.textContent += `${salvaTentativa[letraResposta]}`;
+                identificadorAcerto++;
+                // console.log(identificadorAcerto)
 
             }else{
 
@@ -116,13 +113,25 @@ const jogoForca = () => {
         
     }
 
+    // console.log(salvaTentativa)
     // operador ternário para verificar se a resposta já está completa
     textoResposta.textContent == respostaAdivinha ? 
-    mensagemResposta.textContent = `A resposta é ${respostaAdivinha}. Parabéns!` 
-    : textoResposta.textContent = textoResposta.textContent
-    primeiraTentativa = false
+        mensagemResposta.textContent = `A resposta é ${respostaAdivinha}. Parabéns!` : 
+        textoResposta.textContent = textoResposta.textContent
+    ;
     
 
+    if(identificadorAcerto <= valorAtualAcertos){
+        contadorErros++;
+        contadorTexto.textContent = `Contador de erros: ${contadorErros}/5`
+    };
+    if (contadorErros == 5){
+        mensagemResposta.textContent = `Sinto muito, a resposta era ${respostaAdivinha}.`
+    };
+
+    valorAtualAcertos = identificadorAcerto
+    // console.log(valorAtualAcertos)
+    primeiraTentativa = false
     caixaPalavraTentativa.value = ""
 }
 
@@ -134,14 +143,17 @@ const resetaJogo = () => {
     respostaAdivinha = respostas[posicao]
     dica = dicas[posicao]
     
-    caixaPalavraTentativa.value = ""
-    dicaTexto.textContent = dica
-    inserirDadosForca()
-    letrasUtilizadas = []
-    mensagemResposta.textContent = ""
-    textoUtilizadas.textContent = ""
-    textoInfo.innerHTML = ""
-    
+    caixaPalavraTentativa.value = "";
+    dicaTexto.textContent = dica;
+    inserirDadosForca();
+    letrasUtilizadas = [];
+    mensagemResposta.textContent = "";
+    textoUtilizadas.textContent = "";
+    textoInfo.innerHTML = "";
+    contadorErros = 0;
+    contadorTexto.textContent = `Contador de erros: ${contadorErros}/5`;
+    identificadorAcerto = 0;
+    valorAtualAcertos = 0;
 
 }
 
@@ -149,7 +161,7 @@ const resetaJogo = () => {
 // Chamando as funções e eventos
 inserirDadosForca()
 ativar.addEventListener('click', () => {
-    if(textoResposta.textContent != respostaAdivinha) {
+    if(textoResposta.textContent != respostaAdivinha  && contadorErros < 5) {
         jogoForca()
     }
     
@@ -157,7 +169,7 @@ ativar.addEventListener('click', () => {
 
 caixaPalavraTentativa.addEventListener('keypress', (evento) => {
     
-    if(evento.key == 'Enter' && textoResposta.textContent != respostaAdivinha) {
+    if(evento.key == 'Enter' && textoResposta.textContent != respostaAdivinha && contadorErros < 5) {
         jogoForca()
     }
 

@@ -4,7 +4,7 @@
 :root {
     --azul: rgb(57, 148, 252);
     --laranja: rgb(255, 72, 0);
-    --vermelho: rgb(57, 148, 252);
+    --vermelho: rgb(252, 57, 57);
     --corfundo: rgba(153, 152, 152, 0.073);
     --fontbase: 1.3em;
     --fontgrande: 2em;
@@ -23,7 +23,8 @@
     
 }
 
-.jogo-caixa{
+
+.jogo-area{
     width: 70vw;
     padding: 1em;
     line-height: 20px;
@@ -33,10 +34,18 @@
 
 .jogo-titulo{
     font-size: var(--fontgrande);
-    color: var(--laranja);
+    color: var(--azul);
+    font-weight: bold;
 }
 
-.jogo-input{
+.jogo-contador{
+    font-size: var(--fontbase);
+    color: var(--vermelho);
+    font-weight: bold;
+}
+
+
+.area-input{
     width: 90%;
     padding: 1em;
     box-sizing: border-box;
@@ -46,7 +55,7 @@
     border: solid 2px var(--azul);
 }
 
-.caixa-botao {
+.area-botao {
     margin: 0.5em;
     display: flex;
     flex-direction: row;

@@ -11,14 +11,15 @@
     
     <main class="jogo">
 
-        <section class="jogo-caixa">
+
+        <section class="jogo-area">
             <h2 class="jogo-titulo">Adivinhe a palavra:</h2>
 
-            <p data-dica="dica"></p>
-
-            <input type="text" class="jogo-input" placeholder="Adivinhe a palavra" data-tentativa="tentativa" value="">
-
-            <div class="caixa-botao">
+            <p data-tentativa="contador" class="jogo-contador"></p>
+            
+            <input type="text" class="area-input" placeholder="Adivinhe a palavra" data-tentativa="tentativa" value="">
+            
+            <div class="area-botao">
                 <button class="botao" data-botao="ativar">Ativar</button>
 
                 <button class="botao" data-botao="novo-jogo">Novo jogo</button>
