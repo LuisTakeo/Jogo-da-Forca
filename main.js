@@ -44,9 +44,10 @@ const inserirDadosForca = () => {
     textoResposta.textContent = ""
     for(let espacoTexto in respostaAdivinha){
         salvaTentativa[espacoTexto] = '_ '
-        textoResposta.textContent += salvaTentativa[espacoTexto]
     }
-    
+
+    textoResposta.textContent = "_ ".repeat(respostaAdivinha.length)
+    console.log(textoResposta.textContent)
     
 }
 
@@ -55,7 +56,10 @@ const verificaLetraUtilizada = (letra) => {
     if(!letrasUtilizadas.includes(letra)) {
         letrasUtilizadas.push(letra);
         textoUtilizadas.textContent = `Letras utilizadas: ${JSON.stringify(letrasUtilizadas)}`;
-    } else textoInfo.innerHTML += `<span> Letra ${letra} já utilizada. / </span>`;
+    } else if(!textoInfo.innerHTML.includes(`<span> Letra ${letra} já utilizada. / </span>`)){
+        textoInfo.innerHTML += `<span> Letra ${letra} já utilizada. / </span>`;
+
+    }
     
 }
 
